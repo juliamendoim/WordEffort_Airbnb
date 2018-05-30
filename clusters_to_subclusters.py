@@ -63,24 +63,24 @@ def procesar_cluster(numero):
 
 
     a = cluster_in(or_mayor_fq, clusters, numero) #paso la funcion para los valores de las oraciones con + fq
-    print("")
-    print("")
-    print("")
-    print("----------------")
-    print("")
-    print("")
-    print(a)
-    print("")
-    print("")
-    print("")
-    print("----------------")
-    print("")
-    print("")
-    # try: 
-    #     with open ('jsondata_congrupos/archivo' + str(numero) + '.json', 'w', encoding = 'utf-8') as f:
-    #         f.write(json.dumps(a))
-    # except:
-    #     return
+    # print("")
+    # print("")
+    # print("")
+    # print("----------------")
+    # print("")
+    # print("")
+    # print(a)
+    # print("")
+    # print("")
+    # print("")
+    # print("----------------")
+    # print("")
+    # print("")
+    try: 
+        with open ('jsondata_congrupos/archivo' + str(numero) + '.json', 'w', encoding = 'utf-8') as f:
+            f.write(json.dumps(a))
+    except:
+        return
 
 
 for i in range(150):
