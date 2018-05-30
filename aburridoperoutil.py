@@ -36,11 +36,11 @@ for i in range(150):
 	diccionario_pandaFrames = {'name': or_mayor_fq[-1][0], 'size' : or_mayor_fq[-1][1], 'children' : [{'name' : x[0], 'size' : x[1], 'children' : []}  for x in or_mayor_fq[:-1]]} 
 	        
 	resultado = {
-	    	"name":'chicho',
-	      "size": 200,
+	    	"name":str(i),
+	      "size": 500,
 	      "children":None
 	    }
-	resultado['children'] =  diccionario_pandaFrames
+	resultado['children'] =  [diccionario_pandaFrames]
 
 
 	with open ('archivosjson/' + str(i) + '.json', 'w', encoding = 'utf-8') as f:
