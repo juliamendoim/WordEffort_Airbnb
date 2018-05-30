@@ -7,15 +7,18 @@ import json
 
 def cluster_in(lista, clusters,name):
     diccionario_pandaFrames = [] #necesito crear una lista con los valores de los clusters
+    sizetotal = 0
     for i in lista:
-        numero = clusters[0] == i[0] # esto indica que si una oracion de la columna 0 es igual a la oracion guardada en pesos, devuelve True
-        num_cluster = clusters[numero][1] # aca busca en el row que le dio True un valor del cluster donde estaba esa oracion
-        cluster = clusters[1] == int(num_cluster)
+        numero = clusters[1] == i # esto indica que si una oracion de la columna 0 es igual a la oracion guardada en pesos, devuelve True
+        # num_cluster = clusters[numero][0] # aca busca en el row que le dio True un valor del cluster donde estaba esa oracion
         
-        diccionario_pandaFrames.append({'name': i[0], 'size' : i[1], 'children' : [{'name' : x, 'size' : 1, 'children' : []}  for x in list(clusters[cluster][0]) if x != i[0]]}) 
-        
+        # cluster = clusters[numero][1] == int(num_cluster)
+    
+        diccionario_pandaFrames.append({'name': str(i), 'size' : 100*len(lista), 'children' : [{'name' : x, 'size' : 1, 'children' : []}  for x in list(clusters[numero][0])]}) 
+        sizetotal = sizetotal + 100*len(lista)      
     resultado = {
-      "name":name,
+      "name":str(name),
+      "size": sizetotal,
       "children":None
     }
     resultado['children'] =  diccionario_pandaFrames
@@ -56,28 +59,18 @@ def procesar_cluster(numero):
 
     kmeans.fit(matriz)
 
+    kmeanslabels = list(set(kmeans.labels_))
+
     clusters = [[corpus[i],kmeans.labels_[i]] for i in range(len(corpus))] #tira una lista de listas con frase, cluster
 
     clusters = pd.DataFrame(clusters) #transforma esa lista en un dataframe
-    # clusters = clusters.sort_values(1) #organiza el df por la columna del numero de cluster
-
-
-    a = cluster_in(or_mayor_fq, clusters, numero) #paso la funcion para los valores de las oraciones con + fq
-    # print("")
-    # print("")
-    # print("")
-    # print("----------------")
-    # print("")
-    # print("")
-    # print(a)
-    # print("")
-    # print("")
-    # print("")
-    # print("----------------")
-    # print("")
-    # print("")
+    clusters = clusters.sort_values(1) #organiza el df por la columna del numero de cluster
+   
+    a = cluster_in(kmeanslabels, clusters, numero) #paso la funcion para los valores de las oraciones con + fq
+    
+    
     try: 
-        with open ('jsondata_congrupos/archivo' + str(numero) + '.json', 'w', encoding = 'utf-8') as f:
+        with open ('jsondata_congruposnum/archivo' + str(numero) + '.json', 'w', encoding = 'utf-8') as f:
             f.write(json.dumps(a))
     except:
         return
